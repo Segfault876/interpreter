@@ -112,6 +112,18 @@ vector<Token> lex(char *path){
         tmp.line = lineNum;
         tokens.push_back(tmp);               
 
+      } else if (word == "IF"){
+        Token tmp;
+        tmp.type = IF;
+        tmp.line = lineNum;
+        tokens.push_back(tmp);
+
+      } else if (word == "THEN"){
+        Token tmp;
+        tmp.type = THEN;
+        tmp.line = lineNum;
+        tokens.push_back(tmp);
+
       } else if (count(varSymbols.begin(), varSymbols.end(), word)){ 
         Token tmp;
         tmp.type = VARIABLE;

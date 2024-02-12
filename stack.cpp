@@ -1,4 +1,4 @@
-#include "stack.hpp"
+#include "token.hpp"
 
 void TokenStack::push(Token newToken){
   TokenNode *tmp = new TokenNode;

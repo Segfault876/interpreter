@@ -6,6 +6,8 @@ PRINT "Hello again, world"
 LET a = "asdf"
 LET b = 2
 
+IF THEN
+
 PRINT b PRINT a
 PRINT b
 PRINT a

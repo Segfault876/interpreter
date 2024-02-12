@@ -11,7 +11,8 @@ enum Type{
   PRINT,
   IF,
   OPERATOR,
-  VARIABLE
+  VARIABLE,
+  THEN
 };
 
 // Simple token structure
@@ -27,4 +28,17 @@ struct treeNode{
   Token token;
   treeNode *l;
   treeNode *r;
+};
+
+// Stacks used for constructing AST
+struct TokenNode{
+  Token token;
+  TokenNode *next;
+};
+
+struct TokenStack{
+  TokenNode *top = NULL;
+
+  void push(Token newToken);
+  void pop();
 };

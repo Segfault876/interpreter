@@ -26,21 +26,19 @@ vector<Token> lex(char *path){
   string line;
   while (getline(source, line)) {
     lineNum++;
-
     istringstream ss(line);
     string word;
 
     // Stream through the each line by word
     while (ss >> word){
+      Token tmp;
+      tmp.line = lineNum;
+
       if (word == "PRINT"){
-        Token tmp;
-        tmp.line = lineNum;
         tmp.type = PRINT;
         tokens.push_back(tmp);
 
       } else if (word.front() == '"'){
-        Token tmp;
-        tmp.line = lineNum;
         tmp.type = STRING;
         string str = word;
 
@@ -81,15 +79,11 @@ vector<Token> lex(char *path){
         while (ss >> word);
 
       } else if (isInteger(word) || isDouble(word)) {
-        Token tmp;
         tmp.type = (isInteger(word)) ? INT : NUM;
         tmp.str = word;
-        tmp.line = lineNum;
         tokens.push_back(tmp);
 
       } else if (word == "LET"){
-        Token tmp;
-        tmp.line = lineNum;
         tmp.type = LET;
 
         ss >> word;        
@@ -106,29 +100,25 @@ vector<Token> lex(char *path){
         }
   
       } else if (word == "="){
-        Token tmp;
         tmp.type = OPERATOR;
         tmp.str = "=";
-        tmp.line = lineNum;
         tokens.push_back(tmp);               
 
       } else if (word == "IF"){
-        Token tmp;
         tmp.type = IF;
-        tmp.line = lineNum;
         tokens.push_back(tmp);
 
       } else if (word == "THEN"){
-        Token tmp;
         tmp.type = THEN;
-        tmp.line = lineNum;
+        tokens.push_back(tmp);
+
+      } else if(word == "END"){
+        tmp.type = END;
         tokens.push_back(tmp);
 
       } else if (count(varSymbols.begin(), varSymbols.end(), word)){ 
-        Token tmp;
         tmp.type = VARIABLE;
         tmp.str = word;
-        tmp.line = lineNum;
         tokens.push_back(tmp);
 
       } else {

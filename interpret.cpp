@@ -21,6 +21,13 @@ int interpret(treeNode *root, unordered_map<string, string> scope = {}){
           cout << tmp->l->token.str << endl;
 
       } else if (tmp->l && tmp->l->token.type == VARIABLE){
+        if (scope.find(tmp->l->token.str) == scope.end()){
+          cout << "Variable " << "\"" << tmp->l->token.str << "\"" << 
+          " is undefined on line " << tmp->l->token.line << endl;
+          
+          return 1;
+        }
+
         string s = scope[tmp->l->token.str];
         s.erase(0,1);
         cout << s << endl;
@@ -53,6 +60,10 @@ int interpret(treeNode *root, unordered_map<string, string> scope = {}){
         cout << "Expected symbol after LET on line " 
           << tmp->token.line << endl;
         return 1;
+      }
+    } else if (tmp->token.type == IF){
+      if (tmp->l->token.str == "TRUE"){
+        interpret(tmp->r->l, scope);
       }
     }
   }

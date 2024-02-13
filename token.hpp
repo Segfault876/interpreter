@@ -12,7 +12,10 @@ enum Type{
   IF,
   OPERATOR,
   VARIABLE,
-  THEN
+  THEN,
+  END,
+  TRUE,
+  FALSE
 };
 
 // Simple token structure
@@ -26,8 +29,8 @@ struct Token{
 // treeNode is a binary AST, for simplicity
 struct treeNode{
   Token token;
-  treeNode *l;
-  treeNode *r;
+  treeNode *l = NULL;
+  treeNode *r = NULL;
 };
 
 // Stacks used for constructing AST

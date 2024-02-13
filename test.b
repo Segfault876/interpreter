@@ -1,15 +1,10 @@
-PRINT -1.23
-PRINT "Hello world!"
 REM This is a comment in Nick's Basic
-REM Everything here is ignored PRINT "This wont work"
-PRINT "Hello again, world"
-LET a = "asdf"
-LET b = 2
+REM LET a = "asdf"
+
 
 IF THEN
+  LET b = 2.1
+  PRINT b
+END
 
-PRINT b PRINT a
 PRINT b
-PRINT a
-
-REM This is a comment

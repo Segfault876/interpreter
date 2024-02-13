@@ -1,9 +1,7 @@
 REM This is a comment in Nick's Basic
 LET a = "asdf"
 
-IF THEN
-  LET b = 2.1
-  PRINT b
+IF THEN 
 END
 
 IF THEN

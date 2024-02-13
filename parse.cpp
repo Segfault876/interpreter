@@ -4,6 +4,8 @@
 
 using namespace std;
 
+treeNode *precedence(vector<Token> &tokens);
+
 treeNode *parse(vector<Token> &tokens){
   treeNode *root = new treeNode;
   treeNode *tmp = root;
@@ -19,15 +21,12 @@ treeNode *parse(vector<Token> &tokens){
       conditional->token.str = "TRUE";
       tmp->l = conditional;
 
-      TokenStack tStack;
-
       while(tokens[i].type != THEN){
         if (++i >= tokens.size()){
           cout << "Expected \"THEN\" on line " << tmp->token.line << endl;
           return NULL;
         }
         
-        tStack.push(tokens[i]);
       }
 
       /* Attach body of if-statment to left-leaf of the THEN token.
@@ -39,6 +38,10 @@ treeNode *parse(vector<Token> &tokens){
       tokens = {tokens.begin() + i, tokens.end()};
       tmp->l = parse(tokens);
       i = 0;
+
+      if (tmp->l == NULL){
+        return NULL;
+      }
 
     } else if (tokens[i].type == END){
       tokens = {tokens.begin() + i, tokens.end()};
@@ -58,15 +61,19 @@ treeNode *parse(vector<Token> &tokens){
 
         tmp->l = newNode;
         tmp = tmp->l;
+
+      }else {
+        cout << "Unexpected operator on line " << tokens[i].line << endl;
+        return NULL;
       }
     }
     
     /* If current node is print/operator and current token is a literal
        or a variable, create the left-hand relation */
     if ((tmp->token.type == PRINT || tmp->token.type == OPERATOR ) && 
-      (tokens[i].type == STRING || tokens[i].type == INT || 
-        tokens[i].type == NUM || tokens[i].type == VARIABLE) &&
-        tmp->l == NULL){
+    (tokens[i].type == STRING || tokens[i].type == INT || 
+    tokens[i].type == NUM || tokens[i].type == VARIABLE) &&
+    tmp->l == NULL){
       treeNode *newNode = new treeNode;
       newNode->token = tokens[i];
       tmp->l = newNode;

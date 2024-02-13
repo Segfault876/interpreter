@@ -99,9 +99,10 @@ vector<Token> lex(char *path){
           varSymbols.push_back(word);
         }
   
-      } else if (word == "="){
+      } else if (word == "=" || word == "==" || word == "*" 
+      || word == "/" || word == "-" || word == "+"){
         tmp.type = OPERATOR;
-        tmp.str = "=";
+        tmp.str = word;
         tokens.push_back(tmp);               
 
       } else if (word == "IF"){

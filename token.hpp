@@ -15,7 +15,13 @@ enum Type{
   THEN,
   END,
   TRUE,
-  FALSE
+  FALSE,
+  OPEN_PARENTHESIS,
+  CLOSE_PARENTHESIS,
+  MULTIPLY,
+  ADD,
+  SUBTRACT,
+  DIVIDE,
 };
 
 // Simple token structure

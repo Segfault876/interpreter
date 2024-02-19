@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unordered_map>
+#include <stack>
 #include "token.hpp"
 
 using namespace std;
@@ -62,7 +63,52 @@ int interpret(treeNode *root, unordered_map<string, string> scope = {}){
         return 1;
       }
     } else if (tmp->token.type == IF){
-      if (tmp->l->token.str == "TRUE"){
+      treeNode *loop = tmp->l;
+      stack<treeNode*> stack;
+
+      // Evaluate post-fix expression
+      while (loop){
+        if (loop->token.type == TRUE || loop->token.type == FALSE){
+          stack.push(loop);
+        } else if (loop->token.type == NOT){
+          if (stack.top()->token.type == TRUE){
+            stack.top()->token.type = FALSE;
+          } else {
+            stack.top()->token.type = TRUE;
+          }
+        } else if (loop->token.type == AND){
+          if (stack.top()->token.type == TRUE){
+            stack.pop();
+            
+            if (stack.top()->token.type == FALSE){
+              stack.top()->token.type = FALSE;
+            } else {
+              stack.top()->token.type = FALSE;
+            }
+          } else {
+            stack.top()->token.type = FALSE;
+          }
+        } else if (loop->token.type == OR){
+          if (stack.top()->token.type == FALSE){
+            stack.pop();
+          }
+        }
+
+        if (loop->r){
+          loop = loop->r;
+        } else {
+          loop = NULL;
+        }
+      }
+      
+      // Stack cannot be empty
+      if (stack.empty()){
+        cout << "Invalid boolean expression on line " << tmp->token.line;
+        return 1;
+      }
+
+      // If top of stack is true, run body
+      if (stack.top()->token.type == TRUE){
         interpret(tmp->r->l, scope);
       }
     }

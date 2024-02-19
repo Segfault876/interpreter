@@ -14,14 +14,13 @@ enum Type{
   VARIABLE,
   THEN,
   END,
-  TRUE,
-  FALSE,
   OPEN_PARENTHESIS,
   CLOSE_PARENTHESIS,
-  MULTIPLY,
-  ADD,
-  SUBTRACT,
-  DIVIDE,
+  NOT,
+  AND,
+  OR,
+  TRUE,
+  FALSE
 };
 
 // Simple token structure

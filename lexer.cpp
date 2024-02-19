@@ -113,9 +113,29 @@ vector<Token> lex(char *path){
         tmp.type = THEN;
         tokens.push_back(tmp);
 
-      } else if(word == "END"){
+      } else if (word == "END"){
         tmp.type = END;
         tokens.push_back(tmp);
+
+      } else if (word == "TRUE"){
+        tmp.type = TRUE;
+        tokens.push_back(tmp);
+
+      } else if(word == "FALSE"){
+        tmp.type = FALSE;
+        tokens.push_back(tmp);
+      
+      } else if (word == "AND") {
+        tmp.type = AND;
+        tokens.push_back(tmp);
+      
+      } else if (word == "NOT") {
+        tmp.type = NOT;
+        tokens.push_back(tmp); 
+
+      } else if (word == "OR") {
+        tmp.type = OR;
+        tokens.push_back(tmp);      
 
       } else if (count(varSymbols.begin(), varSymbols.end(), word)){ 
         tmp.type = VARIABLE;

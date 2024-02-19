@@ -4,9 +4,11 @@
 
 using namespace std;
 
-treeNode *precedence(vector<Token> &tokens);
-
 treeNode *parse(vector<Token> &tokens){
+  // Declare precedence functions inside parse to save on memory
+  treeNode *precedence(vector<Token> tokens);
+  treeNode *conditionalPrecedence(vector<Token> tokens);
+
   treeNode *root = new treeNode;
   treeNode *tmp = root;
 
@@ -17,17 +19,17 @@ treeNode *parse(vector<Token> &tokens){
       tmp->r = ifNode;
       tmp = tmp->r;
 
-      treeNode *conditional = new treeNode;
-      conditional->token.str = "TRUE";
-      tmp->l = conditional;
-
+      vector<Token> conditionTokens;
       while(tokens[i].type != THEN){
         if (++i >= tokens.size()){
           cout << "Expected \"THEN\" on line " << tmp->token.line << endl;
           return NULL;
         }
-        
+
+        conditionTokens.push_back(tokens[i]);
       }
+      
+      tmp->l = conditionalPrecedence(conditionTokens);
 
       /* Attach body of if-statment to left-leaf of the THEN token.
          Resize the vector and reset i to avoid duplicate execution */

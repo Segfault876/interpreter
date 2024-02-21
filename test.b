@@ -15,7 +15,7 @@ IF FALSE AND TRUE THEN
 END
 
 IF TRUE AND TRUE THEN
-  PRINT "This should print though"
+  PRINT "This should print too"
 END
 
 REM PRINT c REM <-- This should create an error when uncommented

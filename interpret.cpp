@@ -68,30 +68,41 @@ int interpret(treeNode *root, unordered_map<string, string> scope = {}){
 
       // Evaluate post-fix expression
       while (loop){
-        if (loop->token.type == TRUE || loop->token.type == FALSE){
+        if (loop->token.type == FALSE || loop->token.type == TRUE){
           stack.push(loop);
-        } else if (loop->token.type == NOT){
-          if (stack.top()->token.type == TRUE){
-            stack.top()->token.type = FALSE;
-          } else {
-            stack.top()->token.type = TRUE;
-          }
+
         } else if (loop->token.type == AND){
-          if (stack.top()->token.type == TRUE){
-            stack.pop();
-            
-            if (stack.top()->token.type == FALSE){
-              stack.top()->token.type = FALSE;
-            } else {
-              stack.top()->token.type = FALSE;
-            }
+          treeNode *op1, *op2;
+          treeNode *newNode = new treeNode;
+          op1 = stack.top();
+          stack.pop();
+          op2 = stack.top();
+          stack.pop();
+
+          if (op1->token.type == TRUE && op2->token.type == TRUE){
+            newNode->token.type = TRUE;
           } else {
-            stack.top()->token.type = FALSE;
+            newNode->token.type = FALSE;           
           }
+          
+          stack.push(newNode); 
+
         } else if (loop->token.type == OR){
-          if (stack.top()->token.type == FALSE){
-            stack.pop();
+          treeNode *op1, *op2;
+          treeNode *newNode = new treeNode;
+          op1 = stack.top();
+          stack.pop();
+          op2 = stack.top();
+          stack.pop();
+
+          if (op1->token.type == TRUE || op2->token.type == TRUE){
+            newNode->token.type = TRUE;
+          } else {
+            newNode->token.type = FALSE;           
           }
+          
+          stack.push(newNode); 
+
         }
 
         if (loop->r){

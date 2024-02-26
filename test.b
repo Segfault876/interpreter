@@ -4,6 +4,16 @@ PRINT a
 
 IF FALSE OR TRUE THEN
   PRINT "This should print"
+
+  IF TRUE OR TRUE THEN
+
+    PRINT "AYY"
+  END
+
+  IF FALSE THEN
+    PRINT "NO AYY"
+  END
+
 END
 
 IF FALSE OR FALSE THEN

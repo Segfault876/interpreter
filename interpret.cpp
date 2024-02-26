@@ -71,7 +71,7 @@ int interpret(treeNode *root, unordered_map<string, string> scope = {}){
         if (loop->token.type == FALSE || loop->token.type == TRUE){
           stack.push(loop);
 
-        } else if (loop->token.type == AND){
+        } else if (loop->token.type == AND && stack.size() > 1){
           treeNode *op1, *op2;
           treeNode *newNode = new treeNode;
           op1 = stack.top();
@@ -87,7 +87,7 @@ int interpret(treeNode *root, unordered_map<string, string> scope = {}){
           
           stack.push(newNode); 
 
-        } else if (loop->token.type == OR){
+        } else if (loop->token.type == OR && stack.size() > 1){
           treeNode *op1, *op2;
           treeNode *newNode = new treeNode;
           op1 = stack.top();

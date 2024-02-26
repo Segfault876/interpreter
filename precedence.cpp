@@ -5,6 +5,9 @@
 
 using namespace std;
 
+/* conditionalPrecedence will take a token vector and return a
+ * a tree that contains a postfix expression.
+*/
 treeNode *conditionalPrecedence(vector<Token> tokens){
   treeNode *root = new treeNode;
   treeNode *tmp = root;
@@ -14,7 +17,7 @@ treeNode *conditionalPrecedence(vector<Token> tokens){
 
   for (int i = 0; i < tokens.size(); i++){
     if (tokens[i].type == TRUE || tokens[i].type == FALSE){
-      stack.push(tokens[i]);
+      queue.push(tokens[i]);
 
     } else if (tokens[i].type == OR) {
       while (!stack.empty() && (stack.top().type == OR || stack.top().type == AND)){
@@ -43,20 +46,9 @@ treeNode *conditionalPrecedence(vector<Token> tokens){
     tmp->token = queue.front();
     queue.pop();
 
-    if (!stack.empty()){
+    if (!queue.empty()){
       tmp->r = new treeNode;
       tmp = tmp->r;
-    }
-  }
-
-  treeNode *loop = root;
-  while (loop){
-    cout << "W ";
-
-    if (loop->r){
-      loop = loop->r;
-    }else{
-      loop = NULL;
     }
   }
 

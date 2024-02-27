@@ -24,7 +24,6 @@ enum Type{
 };
 
 // Simple token structure
-// TODO: Use unions to prevent
 struct Token{
   Type type;
   string str;

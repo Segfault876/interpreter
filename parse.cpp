@@ -1,14 +1,10 @@
 #include <vector>
 #include <iostream>
-#include "token.hpp"
+#include "expression.hpp"
 
 using namespace std;
 
 treeNode *parse(vector<Token> &tokens){
-  // Declare precedence functions inside parse to save on memory
-  treeNode *precedence(vector<Token> tokens);
-  treeNode *conditionalPrecedence(vector<Token> tokens);
-
   treeNode *root = new treeNode;
   treeNode *tmp = root;
 

@@ -3,11 +3,11 @@
 #include <algorithm>
 #include <iostream>
 
-// Helper functions intended for use by lexer
+// Utility functions intended for use by lexer
 
 using namespace std;
 
-// Helper function to determine if a string is an integer
+// Utility function to determine if a string is an integer
 bool isInteger(const string& str) {
   int index = 0;
 
@@ -24,7 +24,7 @@ bool isInteger(const string& str) {
   return true;
 }
 
-// Helper function to determine if a string is a double
+// Utility function to determine if a string is a double
 bool isDouble(const string& str) {
   int index = 0;
   bool decimalFound = false;

@@ -3,29 +3,24 @@ LET a = "asdf"
 PRINT a
 
 IF FALSE OR TRUE THEN
-  PRINT "This should print"
+  LET c = "This should print"
+  PRINT c
 
-  IF TRUE OR TRUE THEN
+  REM demonstration of nested if-statement:
+  IF TRUE AND TRUE THEN
 
-    PRINT "AYY"
+    PRINT "This should print"
   END
 
   IF FALSE THEN
-    PRINT "NO AYY"
+    PRINT "This should not print"
   END
 
 END
 
-IF FALSE OR FALSE THEN
+IF FALSE AND TRUE THEN
   PRINT "This should not print"
 END
 
-IF FALSE AND TRUE THEN
-  PRINT "This should also not print"
-END
-
-IF TRUE AND TRUE THEN
-  PRINT "This should print too"
-END
-
 REM PRINT c REM <-- This should create an error when uncommented
+REM PRINT a REM <-- This will always work, so long as "a" is in global

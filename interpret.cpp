@@ -1,7 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <stack>
-#include "token.hpp"
+#include "expression.hpp"
 
 using namespace std;
 
@@ -63,63 +63,11 @@ int interpret(treeNode *root, unordered_map<string, string> scope = {}){
         return 1;
       }
     } else if (tmp->token.type == IF){
-      treeNode *loop = tmp->l;
-      stack<treeNode*> stack;
+      int condition = evalBool(tmp->l);
 
-      // Evaluate post-fix expression
-      while (loop){
-        if (loop->token.type == FALSE || loop->token.type == TRUE){
-          stack.push(loop);
-
-        } else if (loop->token.type == AND && stack.size() > 1){
-          treeNode *op1, *op2;
-          treeNode *newNode = new treeNode;
-          op1 = stack.top();
-          stack.pop();
-          op2 = stack.top();
-          stack.pop();
-
-          if (op1->token.type == TRUE && op2->token.type == TRUE){
-            newNode->token.type = TRUE;
-          } else {
-            newNode->token.type = FALSE;           
-          }
-          
-          stack.push(newNode); 
-
-        } else if (loop->token.type == OR && stack.size() > 1){
-          treeNode *op1, *op2;
-          treeNode *newNode = new treeNode;
-          op1 = stack.top();
-          stack.pop();
-          op2 = stack.top();
-          stack.pop();
-
-          if (op1->token.type == TRUE || op2->token.type == TRUE){
-            newNode->token.type = TRUE;
-          } else {
-            newNode->token.type = FALSE;           
-          }
-          
-          stack.push(newNode); 
-
-        }
-
-        if (loop->r){
-          loop = loop->r;
-        } else {
-          loop = NULL;
-        }
-      }
-      
-      // Stack cannot be empty
-      if (stack.empty()){
-        cout << "Invalid boolean expression on line " << tmp->token.line;
+      if (condition == -1){
         return 1;
-      }
-
-      // If top of stack is true, run body
-      if (stack.top()->token.type == TRUE){
+      } else if (condition == 1){
         interpret(tmp->r->l, scope);
       }
     }

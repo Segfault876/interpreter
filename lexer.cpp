@@ -4,12 +4,12 @@
 #include <sstream>
 #include <string>
 #include "token.hpp"
-#include "helpers.hpp"
+#include "lexutil.hpp"
 
 using namespace std;
 
-// Function lex takes a character pointer to the source file.
-// It will then lex said code and return a Token vector.
+/* Function lex takes a character pointer to the source file.
+ * It will then lex said code and return a Token vector. */
 vector<Token> lex(char *path){
   vector<string> varSymbols;
   ifstream source(path);
@@ -88,6 +88,9 @@ vector<Token> lex(char *path){
 
         ss >> word;        
         if (isReserved(word, lineNum)){
+          cout << '"' << word << '"' << 
+            " is a reserved keyword on line " << lineNum << endl;
+
           tokens.clear();
           return tokens;
         }

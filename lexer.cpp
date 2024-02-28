@@ -138,7 +138,15 @@ vector<Token> lex(char *path){
 
       } else if (word == "OR") {
         tmp.type = OR;
-        tokens.push_back(tmp);      
+        tokens.push_back(tmp);   
+
+      } else if (word == "WHILE"){
+        tmp.type = WHILE;
+        tokens.push_back(tmp);
+
+      } else if (word == "DO"){
+         tmp.type = DO;
+        tokens.push_back(tmp);       
 
       } else if (count(varSymbols.begin(), varSymbols.end(), word)){ 
         tmp.type = VARIABLE;

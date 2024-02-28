@@ -20,7 +20,9 @@ enum Type{
   AND,
   OR,
   TRUE,
-  FALSE
+  FALSE,
+  WHILE,
+  DO,
 };
 
 // Simple token structure

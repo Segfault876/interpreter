@@ -70,6 +70,40 @@ int interpret(treeNode *root, unordered_map<string, string> scope = {}){
       } else if (condition == 1){
         interpret(tmp->r->l, scope);
       }
+    } else if (tmp->token.type == WHILE){
+      int condition = evalBool(tmp->l);
+
+      if (condition == -1){
+        return 1;
+      } 
+      
+      while (condition == 1){
+        interpret(tmp->r->l, scope);
+      }
+    } else if (tmp->token.type == VARIABLE){
+      if (tmp->r->token.type == OPERATOR && tmp->r->token.str == "="){
+        if (scope.find(tmp->token.str) == scope.end()){
+          cout << "Variable " << "\"" << tmp->l->token.str << "\"" << 
+          " is undefined on line " << tmp->l->token.line << endl;
+          
+          return 1;
+        }
+
+        /* Temporarily use direct-assignment, 
+         * this only works for assigning one value at a time */
+        scope[tmp->token.str] = tmp->r->l->token.str;
+
+        /* The first character for any scope string will denote
+        the variable type for the runtime. */
+        if (tmp->r->l->token.type == INT){
+          scope[tmp->token.str].insert(0, "i");
+        } else if (tmp->r->l->token.type == NUM){
+          scope[tmp->token.str].insert(0, "n");
+        } else if (tmp->r->l->token.type == STRING){
+          scope[tmp->token.str].insert(0, "s");
+        }
+
+      }
     }
   }
 

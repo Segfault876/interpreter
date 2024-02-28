@@ -48,7 +48,7 @@ bool isDouble(const string& str) {
 
 bool isReserved(string word, unsigned int lineNum){
   vector<string> reservedWords = {"LET", "IF", "REM", "PRINT", "THEN", 
-    "/", "(", ")", "+", "-", "*", "END"};
+    "/", "(", ")", "+", "-", "*", "END", "WHILE", "TRUE", "FALSE", "DO"};
 
   if (count(reservedWords.begin(), reservedWords.end(), word)) {
     cout << '"' << word << '"' << " is a reserved word on line " 

@@ -59,6 +59,11 @@ treeNode *parse(vector<Token> &tokens){
       
       tmp->l = conditionalPrecedence(conditionTokens);
 
+      // Exit in case of error
+      if (tmp->l == NULL){
+        return NULL;
+      }
+
       /* Attach body of if-statement to left-leaf of the THEN token.
          Resize the vector and reset i to avoid duplicate execution */
       treeNode *thenNode = new treeNode;
@@ -69,6 +74,7 @@ treeNode *parse(vector<Token> &tokens){
       tmp->l = parse(tokens);
       i = 0;
 
+      // Exit in case of error
       if (tmp->l == NULL){
         return NULL;
       }

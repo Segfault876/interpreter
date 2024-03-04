@@ -24,7 +24,7 @@ vector<Token> lex(char *path){
   }
 
   string line;
-  while (getline(source, line)) {
+  while (getline(source, line)){
     lineNum++;
     istringstream ss(line);
     string word;
@@ -145,8 +145,20 @@ vector<Token> lex(char *path){
         tokens.push_back(tmp);
 
       } else if (word == "DO"){
-         tmp.type = DO;
+        tmp.type = DO;
         tokens.push_back(tmp);       
+
+      } else if (word == "ELSE"){
+        tmp.type = ELSE;
+        tokens.push_back(tmp);  
+
+      } else if (word == "("){
+        tmp.type = OPEN_PARENTHESIS;
+        tokens.push_back(tmp);         
+
+      } else if (word == ")"){ 
+        tmp.type = CLOSE_PARENTHESIS;
+        tokens.push_back(tmp);              
 
       } else if (count(varSymbols.begin(), varSymbols.end(), word)){ 
         tmp.type = VARIABLE;

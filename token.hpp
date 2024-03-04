@@ -23,6 +23,7 @@ enum Type{
   FALSE,
   WHILE,
   DO,
+  ELSE,
 };
 
 // Simple token structure

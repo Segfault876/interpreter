@@ -64,13 +64,30 @@ treeNode *parse(vector<Token> &tokens){
         return NULL;
       }
 
-      /* Attach body of if-statement to left-leaf of the THEN token.
+      /* Attach execution body of if-statement to l-node of the THEN token.
          Resize the vector and reset i to avoid duplicate execution */
       treeNode *thenNode = new treeNode;
       thenNode->token = tokens[i];
       tmp->r = thenNode;
       tmp = tmp->r;
       tokens = {tokens.begin() + i, tokens.end()};
+      tmp->l = parse(tokens);
+      i = 0;
+
+      // Exit in case of error
+      if (tmp->l == NULL){
+        return NULL;
+      }
+
+    } else if (tokens[i].type == ELSE){
+      // Create an ELSE node
+      treeNode *elseNode = new treeNode;
+      elseNode->token = tokens[i];
+      tmp->r = elseNode;
+      tmp = tmp->r;
+
+      // Create left child of the ELSE node
+      tokens = {tokens.begin() + ++i, tokens.end()};
       tmp->l = parse(tokens);
       i = 0;
 
@@ -98,7 +115,7 @@ treeNode *parse(vector<Token> &tokens){
         tmp->l = newNode;
         tmp = tmp->l;
 
-      }else {
+      } else {
         cout << "Unexpected operator on line " << tokens[i].line << endl;
         return NULL;
       }

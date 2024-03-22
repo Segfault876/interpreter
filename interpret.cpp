@@ -63,13 +63,30 @@ int interpret(treeNode *root, unordered_map<string, string> scope = {}){
         return 1;
       }
     } else if (tmp->token.type == IF){
+      // Evaluate the if-condition (left child node)
       int condition = evalBool(tmp->l);
 
-      if (condition == -1){
+      if (condition == -1){ // Return if error in expression
         return 1;
-      } else if (condition == 1){
+      } else if (condition == 1){ // If expression is true
+        // Evaluate the l-expression of the r-hand of tmp (THEN node)
         interpret(tmp->r->l, scope);
+      } else { // If false, check if THEN body contains ELSE
+        treeNode *loop = tmp->r->l; // Point to child of THEN node
+
+        while (loop){
+          if (loop->token.type == ELSE){
+            interpret(loop->l, scope);
+          }
+
+          if (loop->r){
+            loop = loop->r;
+          } else {
+            loop = NULL;
+          }
+        }
       }
+
     } else if (tmp->token.type == WHILE){
       int condition = evalBool(tmp->l);
 

@@ -25,8 +25,8 @@ int main(int argc, char *argv[]){
   }
 
   if (tree != NULL){
-    interpret(tree);
+    return interpret(tree);
   }
 
-  return 0;
+  return 1;
 }

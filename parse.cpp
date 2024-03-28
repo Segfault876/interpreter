@@ -88,6 +88,14 @@ treeNode *parse(vector<Token> &tokens){
 
       // Create left child of the ELSE node
       tokens = {tokens.begin() + ++i, tokens.end()};
+
+      // Exit in case of EOL
+      if (tokens.size() == 0){
+        cout << "Unclosed ELSE block on line " 
+          << tmp->token.line << endl;
+        return NULL;
+      }
+
       tmp->l = parse(tokens);
       i = 0;
 

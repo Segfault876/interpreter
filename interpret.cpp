@@ -71,10 +71,10 @@ int interpret(treeNode *root, unordered_map<string, string> scope = {}){
       } else if (condition == 1){ // If expression is true
         // Evaluate the l-expression of the r-hand of tmp (THEN node)
         interpret(tmp->r->l, scope);
-      } else { // If false, check if THEN body contains ELSE
+      } else { // If expression is false
         treeNode *loop = tmp->r->l; // Point to child of THEN node
 
-        while (loop){
+        while (loop){ // Search for ELSE token
           if (loop->token.type == ELSE){
             interpret(loop->l, scope);
           }

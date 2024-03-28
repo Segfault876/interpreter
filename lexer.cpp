@@ -34,6 +34,37 @@ vector<Token> lex(char *path){
       Token tmp;
       tmp.line = lineNum;
 
+      /* Parenthesis can touch other tokens, so the
+       * regular space delimiter isn't good enough. */
+      if (word.at(0) == ')'){
+        tmp.type = CLOSE_PARENTHESIS;
+        tokens.push_back(tmp);
+        word.erase(0,1);
+
+        if (!(ss >> word)){
+          return tokens;
+        }
+
+      } else if (word.at(0) == '('){
+        tmp.type = OPEN_PARENTHESIS;
+        tokens.push_back(tmp);
+        word.erase(0,1);
+
+        if (!(ss >> word)){
+          cout << "Expected closing parenthesis on line " 
+            << tmp.line << endl;
+          
+          tokens.clear();
+          return tokens;
+        }
+      }
+
+      if (word.back() == ')'){
+
+      } else if (word.back() == '('){
+
+      }
+
       if (word == "PRINT"){
         tmp.type = PRINT;
         tokens.push_back(tmp);
@@ -51,8 +82,8 @@ vector<Token> lex(char *path){
           // Get stream position after obtaining next word
           int end = static_cast<int>(ss.tellg());
 
-          // If the string stream is pointing to the end of the line,
-          // set integer end equal to total length of line.
+          /* If the string stream is pointing to the end of the line,
+           * set integer end equal to total length of line. */
           if (end == -1){
             end = line.length();
 
@@ -151,14 +182,6 @@ vector<Token> lex(char *path){
       } else if (word == "ELSE"){
         tmp.type = ELSE;
         tokens.push_back(tmp);  
-
-      } else if (word == "("){
-        tmp.type = OPEN_PARENTHESIS;
-        tokens.push_back(tmp);         
-
-      } else if (word == ")"){ 
-        tmp.type = CLOSE_PARENTHESIS;
-        tokens.push_back(tmp);              
 
       } else if (count(varSymbols.begin(), varSymbols.end(), word)){ 
         tmp.type = VARIABLE;

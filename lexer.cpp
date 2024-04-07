@@ -88,7 +88,7 @@ vector<Token> lex(char *path){
           if (end == -1){
             end = line.length();
 
-            if (word.back() != '"'){
+            if (word.back() != '"') {
               cout << "Invalid string literal on line " << lineNum << endl;
               tokens.clear();
               return tokens;
@@ -96,7 +96,7 @@ vector<Token> lex(char *path){
           }
 
           // Fill string literal with otherwise-ignored spaces
-          for (int i = 0; i < (end - start - word.length()); i++){
+          for (int i = 0; i < (end - start - word.length()); i++) {
             str.append(" ");
           }
 
@@ -106,7 +106,7 @@ vector<Token> lex(char *path){
         tmp.str = str.substr(1, str.length() - 2);
         tokens.push_back(tmp);
 
-      } else if (word == "REM"){
+      } else if (word == "REM") {
         // Simply skip to end if remark
         while (ss >> word);
 
@@ -119,7 +119,7 @@ vector<Token> lex(char *path){
         tmp.type = LET;
 
         ss >> word;
-        if (isReserved(word, lineNum)){
+        if (isReserved(word, lineNum)) {
           cout << '"' << word << '"' << 
             " is a reserved keyword on line " << lineNum << endl;
 
@@ -135,24 +135,24 @@ vector<Token> lex(char *path){
         }
   
       } else if (word == "=" || word == "==" || word == "*" 
-      || word == "/" || word == "-" || word == "+"){
+      || word == "/" || word == "-" || word == "+") {
         tmp.type = OPERATOR;
         tmp.str = word;
         tokens.push_back(tmp);     
 
-      } else if (word == "IF"){
+      } else if (word == "IF") {
         tmp.type = IF;
         tokens.push_back(tmp);
 
-      } else if (word == "THEN"){
+      } else if (word == "THEN") {
         tmp.type = THEN;
         tokens.push_back(tmp);
 
-      } else if (word == "END"){
+      } else if (word == "END") {
         tmp.type = END;
         tokens.push_back(tmp);
 
-      } else if (word == "TRUE"){
+      } else if (word == "TRUE") {
         tmp.type = TRUE;
         tokens.push_back(tmp);
 
@@ -200,7 +200,7 @@ vector<Token> lex(char *path){
           return tokens;
         }
 
-      }else if (word == "GOSUB"){
+      } else if (word == "GOSUB"){
         tmp.type = GOSUB;
         tokens.push_back(tmp);       
 

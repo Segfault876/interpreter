@@ -1,2 +1,2 @@
 all:
-	g++-13 main.cpp lexer.cpp parse.cpp interpret.cpp expression.cpp
+	g++ main.cpp lexer.cpp parse.cpp interpret.cpp expression.cpp

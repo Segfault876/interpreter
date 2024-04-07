@@ -4,7 +4,7 @@
 
 using namespace std;
 
-treeNode *parse(vector<Token> &tokens){
+treeNode *parse(vector<Token> &tokens, bool topLevel = false){
   treeNode *root = new treeNode;
   treeNode *tmp = root;
 
@@ -107,11 +107,13 @@ treeNode *parse(vector<Token> &tokens){
       return root;
 
     } else if (tokens[i].type == END){
-      cout << tokens.size() << endl; // Appears to be >=2 here when code is correct
+      if (topLevel){
+        cout << "Unexpected END on line " << tokens[i].line << endl;
+        tokens.clear();
+        return NULL;
+      }
 
       tokens = {tokens.begin() + i, tokens.end()};
-
-      cout << tokens.size() << endl;
 
       return root;
 
@@ -187,6 +189,17 @@ treeNode *parse(vector<Token> &tokens){
 
       i+=2;
     }
+  }
+
+  if (!topLevel) {
+    //cout << root->token.line << endl;
+    tmp = root;
+    while (tmp->r){
+      tmp = tmp->r;
+    }
+
+    cout << tmp->token.line << endl;
+    return NULL;
   }
 
   return root;

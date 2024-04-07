@@ -11,7 +11,8 @@ treeNode *tree;
 
 vector<Token> lex(char *path);
 treeNode* parse(vector<Token> &tokenVector);
-void interpret(treeNode *root, unordered_map<string, string> scope = {});
+int interpret(treeNode *root, unordered_map<string, string> scope = {}, 
+  unordered_map<string, treeNode*> subroutines = {});
 
 int main(int argc, char *argv[]){
   if (argc < 2) {

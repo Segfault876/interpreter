@@ -8,13 +8,15 @@ using namespace std;
 /* Here, only a single scope map is used. This comes with the advantage of
 maximum-efficiency encapsulation and fastest-possible scope management, at the
 cost of the heavy memory requirements by storing all variable values as strings */
-int interpret(treeNode *root, unordered_map<string, string> scope = {}){
+int interpret(treeNode *root, unordered_map<string, string> scope = {},
+  unordered_map<string, treeNode*> subroutines = {}) {
+
   treeNode *tmp = root;
 
   while (tmp->r){
     tmp = tmp->r;
 
-    if (tmp->token.type == PRINT){
+    if (tmp->token.type == PRINT) {
       if (tmp->l && ( 
         tmp->l->token.type == STRING || 
         tmp->l->token.type == NUM ||

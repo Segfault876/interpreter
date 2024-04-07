@@ -104,8 +104,15 @@ treeNode *parse(vector<Token> &tokens){
         return NULL;
       }
 
+      return root;
+
     } else if (tokens[i].type == END){
+      cout << tokens.size() << endl; // Appears to be >=2 here when code is correct
+
       tokens = {tokens.begin() + i, tokens.end()};
+
+      cout << tokens.size() << endl;
+
       return root;
 
     } else if (tokens[i].type == PRINT || tokens[i].type == LET){
@@ -148,16 +155,20 @@ treeNode *parse(vector<Token> &tokens){
     } else if (tokens[i].type == STRING){
         cout << "Unexpected string on line " << tokens[i].line << endl;
       return NULL;
+
     } else if (tokens[i].type == INT){
         cout << "Unexpected integer on line " << tokens[i].line << endl;
         return NULL;
+
     } else if (tokens[i].type == NUM){
         cout << "Unexpected number on line " << tokens[i].line << endl;
         return NULL;
+
     } else if (tokens[i].type == VARIABLE){
       if ((i+2) > tokens.size() || tokens[i+1].type != OPERATOR || tokens[i+1].str != "="){
         cout << "Invalid usage of variable on line " << tokens[i].line << endl;
         return NULL;
+        
       }
 
       // Create a new variable node

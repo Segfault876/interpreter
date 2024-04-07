@@ -45,12 +45,12 @@ vector<Token> lex(char *path){
           return tokens;
         }
 
-      } else if (word.at(0) == '('){
+      } else if (word.at(0) == '(') {
         tmp.type = OPEN_PARENTHESIS;
         tokens.push_back(tmp);
         word.erase(0,1);
 
-        if (!(ss >> word)){
+        if (!(ss >> word)) {
           cout << "Expected closing parenthesis on line " 
             << tmp.line << endl;
           
@@ -59,17 +59,18 @@ vector<Token> lex(char *path){
         }
       }
 
-      if (word.back() == ')'){
+      if (word.back() == ')') {
+        cout << "We made it! Expect an error now lol" << endl;
 
-      } else if (word.back() == '('){
-
+      } else if (word.back() == '(') {
+        
       }
 
-      if (word == "PRINT"){
+      if (word == "PRINT") {
         tmp.type = PRINT;
         tokens.push_back(tmp);
 
-      } else if (word.front() == '"'){
+      } else if (word.front() == '"') {
         tmp.type = STRING;
         string str = word;
 
@@ -114,10 +115,10 @@ vector<Token> lex(char *path){
         tmp.str = word;
         tokens.push_back(tmp);
 
-      } else if (word == "LET"){
+      } else if (word == "LET") {
         tmp.type = LET;
 
-        ss >> word;        
+        ss >> word;
         if (isReserved(word, lineNum)){
           cout << '"' << word << '"' << 
             " is a reserved keyword on line " << lineNum << endl;
@@ -137,7 +138,7 @@ vector<Token> lex(char *path){
       || word == "/" || word == "-" || word == "+"){
         tmp.type = OPERATOR;
         tmp.str = word;
-        tokens.push_back(tmp);               
+        tokens.push_back(tmp);     
 
       } else if (word == "IF"){
         tmp.type = IF;
@@ -169,7 +170,7 @@ vector<Token> lex(char *path){
 
       } else if (word == "OR") {
         tmp.type = OR;
-        tokens.push_back(tmp);   
+        tokens.push_back(tmp);
 
       } else if (word == "WHILE"){
         tmp.type = WHILE;
@@ -181,7 +182,27 @@ vector<Token> lex(char *path){
 
       } else if (word == "ELSE"){
         tmp.type = ELSE;
-        tokens.push_back(tmp);  
+        tokens.push_back(tmp);
+
+      } else if (word == "SUB"){
+        tmp.type = SUB;
+        tokens.push_back(tmp);
+
+        if (ss >> word && !any_of(word.begin(), word.end(), ::isdigit)
+          && (word.find("\"") == std::string::npos)) {
+
+
+        } else {
+          tokens.clear();
+          cout << "Expected valid name for subroutine on line " << 
+            lineNum << endl;
+
+          return tokens;
+        }
+
+      }else if (word == "GOSUB"){
+        tmp.type = GOSUB;
+        tokens.push_back(tmp);       
 
       } else if (count(varSymbols.begin(), varSymbols.end(), word)){ 
         tmp.type = VARIABLE;

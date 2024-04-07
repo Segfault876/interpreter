@@ -24,6 +24,8 @@ enum Type{
   WHILE,
   DO,
   ELSE,
+  SUB,
+  GOSUB
 };
 
 // Simple token structure

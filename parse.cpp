@@ -106,7 +106,30 @@ treeNode *parse(vector<Token> &tokens, bool topLevel = false){
 
       return root;
 
-    } else if (tokens[i].type == END){
+    } else if (tokens[i].type == SUB){
+      treeNode *newNode = new treeNode;
+      newNode->token = tokens[i];
+      tmp->r = newNode;
+      tmp = tmp->r;
+
+      // Resize with ++i because subroutine name is also a token
+      tokens = {tokens.begin() + ++i, tokens.end()};
+
+      tmp->l = parse(tokens);
+      i = 0;
+
+      // Exit in case of error
+      if (tmp->l == NULL){
+        return NULL;
+      }
+
+    } else if (tokens[i].type == GOSUB) {
+      treeNode *newNode = new treeNode;
+      newNode->token = tokens[i];
+      tmp->r = newNode;
+      tmp = tmp->r;
+
+    } else if (tokens[i].type == END) {
       if (topLevel){
         cout << "Unexpected END on line " << tokens[i].line << endl;
         tokens.clear();
@@ -192,13 +215,12 @@ treeNode *parse(vector<Token> &tokens, bool topLevel = false){
   }
 
   if (!topLevel) {
-    //cout << root->token.line << endl;
     tmp = root;
     while (tmp->r){
       tmp = tmp->r;
     }
 
-    cout << tmp->token.line << endl;
+    cout << "Missing END statment near line " << tmp->token.line << endl;
     return NULL;
   }
 

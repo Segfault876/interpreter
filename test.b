@@ -18,3 +18,14 @@ ELSE
   ELSE
   
   END
+END
+
+SUB asdf
+  PRINT "asdf"
+END
+
+GOSUB asdf
+
+GOSUB asd
+
+GOSUB asdf

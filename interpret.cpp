@@ -123,6 +123,26 @@ int interpret(treeNode *root, unordered_map<string, string> scope = {},
         }
 
       }
+    } else if (tmp->token.type == SUB) {
+      if (tmp->l) {
+        if (subroutines.find(tmp->token.str) != subroutines.end()){
+          cout << "Duplicate declaration of \"" << tmp->token.str << '"' 
+            << " on line " << tmp->token.line << endl;
+          return 1;
+        }
+
+        subroutines[tmp->token.str] = tmp->l;
+
+      }
+    } else if (tmp->token.type == GOSUB) {
+      if (subroutines[tmp->token.str]) {
+        interpret(subroutines[tmp->token.str]);
+
+      } else {
+
+        cout << "Subroutine " << tmp->token.str << " is not declared" << endl;
+        return 1;
+      }
     }
   }
 

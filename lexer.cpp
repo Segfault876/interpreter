@@ -172,25 +172,30 @@ vector<Token> lex(char *path){
         tmp.type = OR;
         tokens.push_back(tmp);
 
-      } else if (word == "WHILE"){
+      } else if (word == "WHILE") {
         tmp.type = WHILE;
         tokens.push_back(tmp);
 
-      } else if (word == "DO"){
+      } else if (word == "DO") {
         tmp.type = DO;
         tokens.push_back(tmp);       
 
-      } else if (word == "ELSE"){
+      } else if (word == "ELSE") {
         tmp.type = ELSE;
         tokens.push_back(tmp);
 
-      } else if (word == "SUB"){
-        tmp.type = SUB;
-        tokens.push_back(tmp);
+      } else if (word == "SUB" || word == "GOSUB") {
+
+        if (word == "SUB") {
+          tmp.type = SUB;
+        } else {
+          tmp.type = GOSUB;
+        }
 
         if (ss >> word && !any_of(word.begin(), word.end(), ::isdigit)
           && (word.find("\"") == std::string::npos)) {
-
+            tmp.str = word;
+            tokens.push_back(tmp);
 
         } else {
           tokens.clear();
@@ -198,11 +203,7 @@ vector<Token> lex(char *path){
             lineNum << endl;
 
           return tokens;
-        }
-
-      } else if (word == "GOSUB"){
-        tmp.type = GOSUB;
-        tokens.push_back(tmp);       
+        }      
 
       } else if (count(varSymbols.begin(), varSymbols.end(), word)){ 
         tmp.type = VARIABLE;

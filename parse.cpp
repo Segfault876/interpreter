@@ -79,7 +79,7 @@ treeNode *parse(vector<Token> &tokens, bool topLevel = false){
         return NULL;
       }
 
-    } else if (tokens[i].type == ELSE){
+    } else if (tokens[i].type == ELSE) {
       // Create an ELSE node
       treeNode *elseNode = new treeNode;
       elseNode->token = tokens[i];
@@ -106,7 +106,7 @@ treeNode *parse(vector<Token> &tokens, bool topLevel = false){
 
       return root;
 
-    } else if (tokens[i].type == SUB){
+    } else if (tokens[i].type == SUB) {
       treeNode *newNode = new treeNode;
       newNode->token = tokens[i];
       tmp->r = newNode;

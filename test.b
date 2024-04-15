@@ -1,31 +1,15 @@
-IF (FALSE OR FALSE ) AND (TRUE OR FALSE ) THEN
-  PRINT "This should not print)"
-ELSE
+LET a = 1
+PRINT a
 
-  PRINT "This should print"
-  IF FALSE THEN
-  ELSE
-  
-  END
+SUB changeA
+  a = 2
 END
 
-IF (FALSE OR FALSE ) AND (TRUE OR FALSE ) THEN
-  PRINT "This should not print)"
-ELSE
-
-  PRINT "This should print"
-  IF FALSE THEN
-  ELSE
-  
-  END
+SUB dontChangeA
+  LET a = 3
 END
 
-SUB asdf
-  PRINT "asdf"
-END
-
-GOSUB asdf
-
-GOSUB asd
-
-GOSUB asdf
+GOSUB dontChangeA
+PRINT a
+GOSUB changeA
+PRINT a

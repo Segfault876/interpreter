@@ -26,7 +26,7 @@ vector<Token> lex(char *path){
   string line;
   while (getline(source, line)){
     lineNum++;
-    istringstream ss(line);
+    stringstream ss(line);
     string word;
 
     // Stream through the each line by word
@@ -36,7 +36,7 @@ vector<Token> lex(char *path){
 
       /* Parenthesis can touch other tokens, so the
        * regular space delimiter isn't good enough. */
-      if (word.at(0) == ')'){
+      if (word.at(0) == ')') {
         tmp.type = CLOSE_PARENTHESIS;
         tokens.push_back(tmp);
         word.erase(0,1);
@@ -60,11 +60,17 @@ vector<Token> lex(char *path){
       }
 
       if (word.back() == ')') {
-        cout << "We made it! Expect an error now lol" << endl;
+        if (word != ")"){
+          word.pop_back();
+          ss << ")";
+        } else {
+          tmp.type = CLOSE_PARENTHESIS;
+          tokens.push_back(tmp); 
+        }
 
       } else if (word.back() == '(') {
-        
       }
+
 
       if (word == "PRINT") {
         tmp.type = PRINT;
@@ -193,7 +199,7 @@ vector<Token> lex(char *path){
         }
 
         if (ss >> word && !any_of(word.begin(), word.end(), ::isdigit)
-          && (word.find("\"") == std::string::npos)) {
+          && (word.find("\"") == string::npos)) {
             tmp.str = word;
             tokens.push_back(tmp);
 

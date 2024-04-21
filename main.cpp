@@ -11,10 +11,14 @@ treeNode *tree;
 
 vector<Token> lex(char *path);
 treeNode* parse(vector<Token> &tokenVector, bool topLevel = false);
+int stackFrame; // Used to prevent infinite recursion
+
 int interpret(treeNode *root, unordered_map<string, string> &scope, 
   unordered_map<string, treeNode*> subroutines = {});
 
 int main(int argc, char *argv[]){
+  stackFrame = 0;
+
   if (argc < 2) {
     cout << "Expected path to a .b file" << endl;
   } else {

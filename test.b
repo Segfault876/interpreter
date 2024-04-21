@@ -2,7 +2,8 @@ LET a = 1
 PRINT a
 
 SUB changeA
-  a = 2
+  PRINT "a"
+  GOSUB changeA
 END
 
 SUB dontChangeA
@@ -11,5 +12,5 @@ END
 
 GOSUB dontChangeA
 PRINT a
+
 GOSUB changeA
-PRINT a

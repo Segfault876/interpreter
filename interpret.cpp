@@ -5,6 +5,7 @@
 #include "combinations.hpp"
 
 using namespace std;
+extern int stackFrame;
 
 /* Here, only a single scope map is used. This comes with the advantage of
 maximum-efficiency encapsulation and fastest-possible scope management, at the
@@ -12,6 +13,12 @@ cost of the heavy memory requirements by storing all variable values as strings 
 int interpret(treeNode *root, unordered_map<string, string> &scope,
   unordered_map<string, treeNode*> subroutines = {}) {
   unordered_map<string, string> localScope = {};
+  stackFrame++;
+
+  if (stackFrame >= 2048){
+    cout << "Stack overflow. Maximum frame size (2048) exceeded." << endl;
+    return -1;
+  }
 
   treeNode *tmp = root;
 
@@ -169,6 +176,7 @@ int interpret(treeNode *root, unordered_map<string, string> &scope,
     }
   }
 
+  stackFrame--;
   // Return 0 if all is well
   return 0;
 }

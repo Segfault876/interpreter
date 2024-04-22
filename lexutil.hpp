@@ -65,9 +65,10 @@ bool isReserved(string word, unsigned int lineNum){
 string correctDelimiter(string line) {
   stringstream ss(line);
   string word;
+  size_t pos;
 
   while (ss >> word) {
-    size_t pos = line.find(word);
+    pos = line.find(word);
 
     if (word.at(0) == ')') {
       line.erase(pos, 1);
@@ -88,12 +89,20 @@ string correctDelimiter(string line) {
       line.insert(pos + word.size(), " ( ");
 
     }
+  }
 
-    pos = line.find('=');
+  pos = line.find('=');
 
-    if (pos != std::string::npos) {
+  while (pos != string::npos) {
+    if (line[pos + 1] && line[pos + 1] == '='){
+      line.insert(pos, " ");
+      line.insert(pos + 3, " ");
+      pos = line.find('=', pos+3);
+
+    } else {
       line.insert(pos, " ");
       line.insert(pos + 2, " ");
+      pos = line.find('=', pos+2);
     }
   }
 

@@ -1,5 +1,13 @@
-IF ( (TRUE) ) THEN
-  PRINT "Yay"
+SUB test
+  IF ( (TRUE) OR (FALSE) ) THEN
+    PRINT "Yay"
+  END
 END
 
-LET a= 1
+GOSUB test
+
+LET a = 1
+
+PRINT a
+
+REM a==b

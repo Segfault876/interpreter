@@ -59,3 +59,44 @@ bool isReserved(string word, unsigned int lineNum){
 
   return false;
 }
+
+/* Because the lexer uses spaces as a delimiter, manual
+ * space insertion is needed for certain tokens. */
+string correctDelimiter(string line) {
+  stringstream ss(line);
+  string word;
+
+  while (ss >> word) {
+    size_t pos = line.find(word);
+
+    if (word.at(0) == ')') {
+      line.erase(pos, 1);
+      line.insert(pos, " ) ");
+
+    } else if (word.at(0) == '(') {
+      line.erase(pos, 1);
+      line.insert(pos, "( ");
+
+    }
+
+    if (word.back() == ')') {
+      line.erase(pos + word.size(), 1);
+      line.insert(pos + word.size(), " ) ");
+
+    } else if (word.back() == '(') {
+      line.erase(pos + word.size() - 1, 1);
+      line.insert(pos + word.size(), " ( ");
+
+    }
+
+    pos = line.find('=');
+
+    if (pos != std::string::npos) {
+      line.insert(pos, " ");
+      line.insert(pos + 2, " ");
+    }
+  }
+
+  ss.str(line);
+  return ss.str();
+}

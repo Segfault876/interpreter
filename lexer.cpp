@@ -26,33 +26,9 @@ vector<Token> lex(char *path){
   string line;
   while (getline(source, line)){
     lineNum++;
+    line = correctDelimiter(line);
     stringstream ss(line);
     string word;
-
-    // Insert spaces between all parenthesis for lexing
-    while (ss >> word) {
-      size_t pos = line.find(word);
-
-      if (word.at(0) == ')') {
-        line.erase(pos, 1);
-        line.insert(pos, " ) ");
-      } else if (word.at(0) == '(') {
-        line.erase(pos, 1);
-        line.insert(pos, "( ");
-      }
-
-      if (word.back() == ')') {
-        line.erase(pos + word.size(), 1);
-        line.insert(pos + word.size(), " ) ");
-      } else if (word.back() == '(') {
-        line.erase(pos + word.size() - 1, 1);
-        line.insert(pos + word.size(), " ( ");
-      }
-    }
-
-    ss.str(line);
-    ss.clear();
-    ss.seekg(0);
 
     // Stream through the each line by word
     while (ss >> word){

@@ -29,50 +29,45 @@ vector<Token> lex(char *path){
     stringstream ss(line);
     string word;
 
+    // Insert spaces between all parenthesis for lexing
+    while (ss >> word) {
+      size_t pos = line.find(word);
+
+      if (word.at(0) == ')') {
+        line.erase(pos, 1);
+        line.insert(pos, " ) ");
+      } else if (word.at(0) == '(') {
+        line.erase(pos, 1);
+        line.insert(pos, "( ");
+      }
+
+      if (word.back() == ')') {
+        line.erase(pos + word.size(), 1);
+        line.insert(pos + word.size(), " ) ");
+      } else if (word.back() == '(') {
+        line.erase(pos + word.size() - 1, 1);
+        line.insert(pos + word.size(), " ( ");
+      }
+    }
+
+    ss.str(line);
+    ss.clear();
+    ss.seekg(0);
+
     // Stream through the each line by word
     while (ss >> word){
       Token tmp;
       tmp.line = lineNum;
 
-      /* Parenthesis can touch other tokens, so the
-       * regular space delimiter isn't good enough. */
-      if (word.at(0) == ')') {
-        tmp.type = CLOSE_PARENTHESIS;
-        tokens.push_back(tmp);
-        word.erase(0,1);
-
-        if (!(ss >> word)){
-          return tokens;
-        }
-
-      } else if (word.at(0) == '(') {
+      if (word == "(") {
         tmp.type = OPEN_PARENTHESIS;
         tokens.push_back(tmp);
-        word.erase(0,1);
 
-        if (!(ss >> word)) {
-          cout << "Expected closing parenthesis on line " 
-            << tmp.line << endl;
-          
-          tokens.clear();
-          return tokens;
-        }
-      }
+      } else if (word == ")") {
+        tmp.type = CLOSE_PARENTHESIS;
+        tokens.push_back(tmp);
 
-      if (word.back() == ')') {
-        if (word != ")"){
-          word.pop_back();
-          ss << ")";
-        } else {
-          tmp.type = CLOSE_PARENTHESIS;
-          tokens.push_back(tmp); 
-        }
-
-      } else if (word.back() == '(') {
-      }
-
-
-      if (word == "PRINT") {
+      } else if (word == "PRINT") {
         tmp.type = PRINT;
         tokens.push_back(tmp);
 

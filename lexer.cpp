@@ -188,7 +188,8 @@ vector<Token> lex(char *path){
         tokens.push_back(tmp);
 
       } else {
-        cout << "Invalid token on line " << lineNum << endl;
+        cout << "Invalid token " << "\"" << word << "\"" 
+          << " on line " << lineNum << endl;
         tokens.clear();
         return tokens;
       }

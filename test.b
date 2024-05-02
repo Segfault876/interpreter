@@ -1,13 +1,25 @@
-SUB test
-  IF ( (TRUE) OR (FALSE) ) THEN
-    PRINT "Yay"
-  END
+REM This is a comment
+
+LET someVariable = 1
+
+PRINT someVariable
+
+SUB changeA
+  REM Uncommenting below will change scope of someVariable
+  REM LET someVariable = 1
+  someVariable = 2
 END
 
-GOSUB test
+GOSUB changeA
 
-LET a = 1
+PRINT someVariable
 
-PRINT a
+REM Order of boolean operations demo
 
-REM a==b
+IF TRUE AND TRUE OR FALSE THEN
+ PRINT "This should print"
+END
+
+IF FALSE AND TRUE OR FALSE THEN
+ PRINT "This should not print"
+END

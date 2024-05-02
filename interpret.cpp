@@ -16,7 +16,7 @@ int interpret(treeNode *root, unordered_map<string, string> &scope,
   stackFrame++;
 
   if (stackFrame >= 2048){
-    cout << "Stack overflow. Maximum frame size (2048) exceeded." << endl;
+    cout << "Stack overflow: maximum frame size (2048) exceeded" << endl;
     return -1;
   }
 

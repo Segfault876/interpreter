@@ -80,7 +80,7 @@ treeNode *conditionalPrecedence(vector<Token> tokens){
 
 /* numericalPrecedence will take a token vector and return a
  * a tree that contains a numerical postfix expression. */
-treeNode *numericalPrecedence(vector<Token> tokens){
+treeNode *numericalPrecedence(vector<Token> tokens) {
   treeNode *root = new treeNode;
   treeNode *tmp = root;
 
@@ -143,13 +143,14 @@ treeNode *numericalPrecedence(vector<Token> tokens){
  * returning 1 for true, 0 for false, and -1 for error. */
 int evalBool(treeNode *loop){
   stack<treeNode*> stack;
+  int line = -1;
 
   // Evaluate post-fix expression
-  while (loop){
-    if (loop->token.type == FALSE || loop->token.type == TRUE){
+  while (loop) {
+    if (loop->token.type == FALSE || loop->token.type == TRUE) {
       stack.push(loop);
 
-    } else if (loop->token.type == AND && stack.size() > 1){
+    } else if (loop->token.type == AND && stack.size() > 1) {
       treeNode *op1, *op2;
       treeNode *newNode = new treeNode;
       op1 = stack.top();
@@ -157,7 +158,7 @@ int evalBool(treeNode *loop){
       op2 = stack.top();
       stack.pop();
 
-      if (op1->token.type == TRUE && op2->token.type == TRUE){
+      if (op1->token.type == TRUE && op2->token.type == TRUE) {
         newNode->token.type = TRUE;
       } else {
         newNode->token.type = FALSE;           
@@ -165,7 +166,7 @@ int evalBool(treeNode *loop){
       
       stack.push(newNode); 
 
-    } else if (loop->token.type == OR && stack.size() > 1){
+    } else if (loop->token.type == OR && stack.size() > 1) {
       treeNode *op1, *op2;
       treeNode *newNode = new treeNode;
       op1 = stack.top();
@@ -173,14 +174,17 @@ int evalBool(treeNode *loop){
       op2 = stack.top();
       stack.pop();
 
-      if (op1->token.type == TRUE || op2->token.type == TRUE){
+      if (op1->token.type == TRUE || op2->token.type == TRUE) {
         newNode->token.type = TRUE;
       } else {
         newNode->token.type = FALSE;           
       }
       
       stack.push(newNode); 
+    }
 
+    if (loop->token.line) {
+      line = loop->token.line;
     }
 
     if (loop->r){
@@ -191,8 +195,12 @@ int evalBool(treeNode *loop){
   }
   
   // Stack cannot be empty
-  if (stack.empty()){
-    cout << "Invalid boolean expression on line " << loop->token.line;
+  if (stack.empty()) {
+    if (line > 0) {
+      cout << "Invalid boolean expression on line " << line << endl;
+    } else {
+      cout << "Invalid boolean expression" << endl;
+    }
     return -1;
   }
 

@@ -1,5 +1,3 @@
-REM This is a comment
-
 LET someVariable = 1
 
 PRINT someVariable
@@ -16,10 +14,12 @@ PRINT someVariable
 
 REM Order of boolean operations demo
 
-IF TRUE AND TRUE OR FALSE THEN
- PRINT "This should print"
+IF (TRUE AND TRUE OR FALSE) THEN
+  PRINT "This should print"
 END
 
 IF FALSE AND TRUE OR FALSE THEN
- PRINT "This should not print"
+  PRINT "This should not print"
+ELSE
+  PRINT "Cant google this one!"
 END

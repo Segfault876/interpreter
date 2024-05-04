@@ -81,7 +81,7 @@ string correctDelimiter(string line) {
     }
 
     if (word.back() == ')') {
-      line.erase(pos + word.size(), 1);
+      line.erase(pos + word.size() - 1, 1);
       line.insert(pos + word.size(), " ) ");
 
     } else if (word.back() == '(') {
